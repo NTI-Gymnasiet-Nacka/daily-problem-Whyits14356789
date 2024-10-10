@@ -1,0 +1,153 @@
+from googletrans import Translator
+
+
+class översättning:
+    def __init__(self):
+        # Summary:
+
+        # Imports googletrans translatos and make it into a attriubute with self.
+
+        # Parameters:
+        # self(obejct): Self.translator is being  associated with Translato().
+
+        self.translator = Translator()
+
+    def Föreslå_språken(self):
+        """Summary:
+
+        Choose the languages to write in and translate to.
+
+        Make the user to enter source language and following language in the terminal.
+
+        Return: Str; Initials of the language like "sv" or "en".
+
+        Also returns the phrase to be translated into the specific language.
+
+        """
+        first_lang = input(
+            "Ange ett huvudspråk att översätta från, Skriv språkets två inatialer; Sv, Fr eller En: "
+        )
+        sec_lang = input(
+            "Ange ett språk för översättning till, Skriv språket två inatialer; Sv, Fr eller It: "
+        )
+        text = input("Write your sentence out: ")
+
+        return first_lang, sec_lang, text
+
+    def From_one_to_another_one(self, text, first_lang, sec_lang):
+        """Summary:
+
+        Translate the language from one to another.
+
+        self.tranlator.translate to convert the inputed text from the source language to
+        the target language.
+
+        Parameters:
+        text(str): The text, first_lang(str): Primary lang, sec_lang(str): Secondary lang
+
+        Return:
+        Str: A translated version of the text
+        """
+        translating = self.translator.translate(text, src=first_lang, dest=sec_lang)
+        return translating.text
+
+    def reply(self) -> str:
+        """Summary:
+        This section handels the reply funtions and will take in the requested languages.
+
+        Tralsates the text from one language to another.
+
+        Parameters:
+        self(str): Make it possible so methods can access attributes inside of the function and/
+        other methods outside the func.
+
+        Returns:
+            str: _description_
+            sec_translation: The translated string of text.
+        """
+        first_lang, sec_lang, text = self.Föreslå_språken()
+        sec_translation = self.From_one_to_another_one(text, first_lang, sec_lang)
+        return sec_translation
+
+    def end_site(self):
+        """
+        #  Func: Will ask the user if they want to shut down the site and while pressing x/
+        and while tapping "x" the whole thing breaks.
+
+        Parmeters:
+        the functions reffering to the object (self) and what the functions can be associated with.
+
+        Output:
+        Afterwards prints of strings of text that tells the user; "The site has been shutdown"
+        To insure the user it went through.
+
+        """
+        kontroll = input("Är du säker; Tryck 'x': ")
+        if kontroll == "x":
+            print("Good translating")
+            print("Shutting down the site......")
+
+    def menu(self):
+        # This is the menu for the whole program and while it remains true and menu come up\
+        # Were It will guide you throguh options, From the numbers 1 - 3 etc.
+
+        conversations_histroy = []
+        # Keeps track of the conversations being hold while translating. Therefore, will not allow to run "reply()" if nothing\
+        # else have been written from option 1...
+
+        while True:
+            print("Webbsite of translating/ Menu:")
+            print("1.Write/ Then translate writing")
+            print("2. Answer back")
+            print("3. Reset conversation")
+            print("4. Quit")
+            pick_nr = input("Chose a following nr to procced (1-4): ")
+
+            if pick_nr == "1":
+                # Translate sentence from primary language to secondeary language.
+                # Conversations_history: Read and apply the phrase to the list,
+                # In order to reply.
+                first_lang, sec_lang, text = self.Föreslå_språken()
+                translate_sentence = self.From_one_to_another_one(
+                    text, first_lang, sec_lang
+                )
+                print(f"Översättning: {text} -> {translate_sentence}")
+                conversations_histroy.append(translate_sentence)
+
+            elif pick_nr == "2":
+                # Answer back to the previous wrote phrase and if nothing has been written.
+                # It will respond by saying: "Nothing earlier for the "user" to answer.
+                if conversations_histroy:
+                    print("Svar tillbaka: ", self.reply())
+                else:
+                    print("Ingen tidigare översättning att svara på.")
+
+            elif pick_nr == "3":
+                # Reset option
+                print("Conversation has been reset")
+                conversations_histroy.clear()
+
+            elif pick_nr == "4":
+                # close code
+                self.end_site()
+                break
+            else:
+                print("Invalid choice, Go again")
+
+
+if __name__ == "__main__":
+    """
+
+        When __name__ is equaled to main: Start point for running the code
+
+        Object called: solve_app created
+
+        Parameter:
+        Solve_app:  This instance includes the class översättning() and the "menu" method from the class gets called (Under it).
+
+        So when running the code, the menu displays in the terminal.
+
+        This make the whole class översättning() run as expected during the execution of the code
+    """
+    solve_app = översättning()
+    solve_app.menu()
